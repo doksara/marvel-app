@@ -1,7 +1,12 @@
 <template>
-  <article class="card">
-    <img class="card__thumbnail" :src="imgPath" :alt="comic.title">
-    <h3 class="card__title">{{ comic.title }}</h3>
+  <article class="card shadow-md">
+    <div class="card__header">
+      <img class="card__thumbnail" :src="imgPath" :alt="comic.title">
+    </div>
+    <div class="card__footer">
+      <h3 class="card__title">{{ comic.title }}</h3>
+      <p>{{ basePrice }}</p>
+    </div>
   </article>
 </template>
 
@@ -29,8 +34,20 @@ export default defineComponent({
       return ''
     })
 
+    // Formats the base comic price
+    const basePrice = computed(() => {
+      const { prices } = props.comic
+      if (prices && prices[0]) {
+        return `${Number(prices[0].price).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })}`
+      }
+    })
+
     return {
-      imgPath
+      imgPath,
+      basePrice
     }
   },
 })
@@ -38,17 +55,45 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .card {
-    width: 4rem;
-    height: 6rem;
+    position: relative;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: .75rem;
+
+    &__header {
+      position: relative;
+      width: 100%;
+      height: 14rem;
+      overflow: hidden;
+      border-top-left-radius: .75rem;
+      border-top-right-radius: .75rem;
+    }
 
     &__thumbnail {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       display: block;
       width: 100%;
     }
 
-    &__title {
+    &__footer {
       color: #fff;
+      text-align: left;
+      padding: 8px 0 8px 8px;
+      --tw-bg-opacity: 1;
+      background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+      border-bottom-left-radius: .75rem;
+      border-bottom-right-radius: .75rem;
+    }
+
+    &__title {
       font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 24ch;
     }
   }
 </style>
