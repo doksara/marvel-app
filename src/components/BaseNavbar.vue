@@ -3,33 +3,26 @@
     <ul class="navbar__list">
       <li class="navbar__item">
         <BaseLink to="/comics" text="Comics" />
-        <BaseLink to="/comics" text="Characters" />
-        <BaseLink to="/comics" text="Series" />
-        <BaseLink to="/comics" text="Stories" />
+      </li>
+      <li class="navbar__item">
+        <BaseLink to="/cart" text="Shopping Cart" />
+      </li>
+      <li class="navbar__item">
+        <BaseLink to="/orders" text="My Orders" />
       </li>
     </ul>
   </nav>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import BaseLink from './BaseLink.vue'
-
-export default defineComponent({
-  components: {
-    BaseLink
-  },
-  setup() {
-    
-  },
-})
 </script>
-
 
 <style lang="scss" scoped>
 .navbar {
   width: 100%;
   margin-bottom: 4rem;
+  background: red;
 
   &__list {
     display: flex;
@@ -39,6 +32,7 @@ export default defineComponent({
 
   &__item {
     display: inline-block;
+    font-size: 1.25rem;
   }
 }
 </style>

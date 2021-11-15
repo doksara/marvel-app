@@ -1,42 +1,36 @@
 <template>
   <router-link class="link" :to="to">
-    {{ text }}
+    <span>{{ text }}</span>
   </router-link>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+  // Props
+  interface Props {
+    to: string
+    text: string
+  }
 
-export default defineComponent({
-  props: {
-    to: String,
-    text: String
-  },
-  setup() {
-    
-  },
-})
+  // Defaults
+  const props = withDefaults(defineProps<Props>(), {
+    to: '/',
+    text: ''
+  })
 </script>
 
 
 <style lang="scss" scoped>
-a {
-  background-color: red;
+.link {
+  display: inline-block;
   color: white;
   padding: 1em 1.5em;
   text-decoration: none;
   text-transform: uppercase;
+
+  &:hover,
+  &:active {
+    font-weight: 700;
+  }
 }
 
-a:hover {
-  background-color: #555;
-}
-
-a:active {
-  background-color: black;
-}
-
-a:visited {
-  background-color: #ccc;
-}
 </style>

@@ -4,33 +4,35 @@
       <Spinner />
     </div>
     <div v-else class="grid grid-cols-4 gap-x-5 gap-y-10">
-      <ComicCard v-for="comic in comicData" :key="comic.id" :comic="comic" />
+      <ComicCard 
+        v-for="comic in comicData" 
+        :key="comic.id" 
+        :comic="comic"
+        @add-to-cart="addToCart(comic)"
+        @add-to-watchlist="addToWatchlist" 
+      />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue'
+<script setup lang="ts">
+import { onMounted } from 'vue'
 import { useComicsClient } from '../api/useComicsClient'
 import Spinner from '../components/Spinner.vue'
 import ComicCard from '../components/ComicCard.vue'
+import { Comic } from '../interfaces'
 
-export default defineComponent({
-  components: {
-    Spinner,
-    ComicCard,
-  },
-  setup() {
-    const { isLoading, error, comicData, fetchComics } = useComicsClient()
+const { isLoading, error, comicData, fetchComics } = useComicsClient()
 
-    onMounted(async () => {
-      await fetchComics()
-    })
-    
-    return {
-      isLoading,
-      comicData
-    }
-  },
+const addToCart = (comic: Comic) => {
+  console.log("eee");
+}
+
+const addToWatchlist = (comic: Comic) => {
+  console.log("aaa");
+}
+
+onMounted(async () => {
+  await fetchComics()
 })
 </script>
