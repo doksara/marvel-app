@@ -21,15 +21,19 @@ import { useComicsClient } from '../api/useComicsClient'
 import Spinner from '../components/Spinner.vue'
 import ComicCard from '../components/ComicCard.vue'
 import { Comic } from '../interfaces'
+import { useCartStore } from '../store/cartStore'
+import { useWatchlistStore } from '../store/watchlistStore'
 
 const { isLoading, error, comicData, fetchComics } = useComicsClient()
+const cartStore = useCartStore()
+const watchlistStore = useWatchlistStore()
 
 const addToCart = (comic: Comic) => {
-  console.log("eee");
+  cartStore.addToCart(comic)
 }
 
 const addToWatchlist = (comic: Comic) => {
-  console.log("aaa");
+  watchlistStore.addToWatchlist(comic)
 }
 
 onMounted(async () => {

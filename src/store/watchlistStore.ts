@@ -1,23 +1,22 @@
 import { defineStore } from 'pinia'
 import { Comic } from '../interfaces'
 
-export type CartState = {
+export type WatchlistState = {
   items: Array<Comic>;
 };
 
-export const useCartStore = defineStore('cart', {
+export const useWatchlistStore = defineStore('watchlist', {
   state: () => {
     return {
       items: []
-    } as CartState
+    } as WatchlistState
   },
   actions: {
-    addToCart(item: Comic) {
+    addToWatchlist(item: Comic) {
       this.items.push(item)
     },
-    removeFromCart(itemId: number) {
+    removeFromWatchlist(itemId: number) {
       this.items.filter(item => item.id !== itemId);
     }
-  },
-  persist: true
+  }
 })

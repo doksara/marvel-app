@@ -1,16 +1,22 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Comics from "@/views/Comics.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import Comics from '@/views/Comics.vue'
+import Cart from '@/views/Cart.vue'
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Comics,
   },
   {
-    path: "/comics",
-    name: "Comics",
+    path: '/comics',
+    name: 'Comics',
     component: Comics,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
   },
 ];
 
@@ -19,4 +25,4 @@ const router = createRouter({
   routes,
 });
 
-export default router;
+export default router

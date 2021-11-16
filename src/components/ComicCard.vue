@@ -145,11 +145,12 @@ const basePrice = computed(() => {
     }
 
     &:hover {
+      background-color: #e33943;
       border-color: #e33943;
     }
 
     &:hover &-icon {
-      fill: #e33943;
+      fill: white;
     }
 
     &-icon {

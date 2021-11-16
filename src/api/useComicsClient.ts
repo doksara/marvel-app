@@ -16,7 +16,6 @@ export const useComicsClient = () => {
       .get<ComicDataWrapper>(URL)
       .then((response) => {
         if (response.data.data?.results){
-          console.log(response.data.data.results)
           comicData.value = response.data.data.results
         }
       })

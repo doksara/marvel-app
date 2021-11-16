@@ -22,7 +22,7 @@ import BaseLink from './BaseLink.vue'
 .navbar {
   width: 100%;
   margin-bottom: 4rem;
-  background: red;
+  background: #e33943;;
 
   &__list {
     display: flex;
