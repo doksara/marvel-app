@@ -1,0 +1,11 @@
+// Abstracts
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+
+// Base
+@use 'base/typography.scss';
+
+// Tailwindd
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -22,6 +22,7 @@ const loadStorage = (store: Store) => {
 
 export default ({ options, store }: PiniaPluginContext): void => {
   if (options.persist) {
+    // Define default settings here
     const defaultSettings = {
       key: store.$id,
       storage: localStorage,
@@ -34,8 +35,15 @@ export default ({ options, store }: PiniaPluginContext): void => {
       updateStorage(store)
     }
 
+    // Load store data from storage
     loadStorage(store)
 
+    // Add method for clearing persisted storage
+    store.clearPersistedStorage = () => {
+      defaultSettings.storage.removeItem(defaultSettings.key)
+    }
+
+    // Watch the store for changes
     watch(() => store.$state, () => {
       updateStorage(store)
     }, { deep: true })

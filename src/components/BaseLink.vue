@@ -1,6 +1,6 @@
 <template>
-  <router-link class="link" :to="to">
-    <span>{{ text }}</span>
+  <router-link class="link" :to="props.to">
+    <span>{{ props.text }}</span>
   </router-link>
 </template>
 

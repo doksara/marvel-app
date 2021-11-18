@@ -9,7 +9,7 @@
         :key="comic.id" 
         :comic="comic"
         @add-to-cart="addToCart(comic)"
-        @add-to-watchlist="addToWatchlist" 
+        @add-to-watchlist="addToWatchlist(comic)" 
       />
     </div>
   </div>

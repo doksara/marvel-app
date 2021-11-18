@@ -1,19 +1,21 @@
 <template>
-  <article class="card shadow-md">
-    <div class="card__header">
-      <img class="card__thumbnail" :src="imgPath" :alt="comic?.title" />
+  <article class="c-card shadow-md">
+    <div class="c-card__header">
+      <router-link :to="`/comics/${props.comic?.id}`">
+        <img class="c-card__thumbnail" :src="imgPath" :alt="props.comic?.title" />
+      </router-link>
     </div>
-    <div class="card__footer">
-      <h3 class="card__title">{{ comic?.title }}</h3>
-      <p class="card__price">{{ basePrice }}</p>
-      <div class="card__actions">
-        <button @click="$emit('addToCart')" class="card__button shadow-sm" title="Add to Cart">
-          <svg class="card__button-icon">
+    <div class="c-card__footer">
+      <h3 class="c-card__title">{{ props.comic?.title }}</h3>
+      <p class="c-card__price">{{ basePrice }}</p>
+      <div class="c-card__actions">
+        <button @click="$emit('addToCart')" class="c-card__button shadow-sm" title="Add to Cart">
+          <svg class="c-card__button-icon">
             <use xlink:href="../assets/symbol-defs.svg#icon-shopping-cart" />
           </svg>
         </button>
-        <button @click="$emit('addToWatchlist')" class="card__button shadow-sm" title="Add to Watchlist">
-          <svg class="card__button-icon">
+        <button @click="$emit('addToWatchlist')" class="c-card__button shadow-sm" title="Add to Watchlist">
+          <svg class="c-card__button-icon">
             <use xlink:href="../assets/symbol-defs.svg#icon-book-open" />
           </svg>
         </button>
@@ -61,28 +63,29 @@ const basePrice = computed(() => {
   }
 })
 
-
-
 </script>
 
 <style lang="scss" scoped>
-.card {
+.c-card {
   position: relative;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0.75rem;
 
   &:hover &__actions {
     top: 0;
   }
 
+  &:hover &__thumbnail {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  
   &__header {
     position: relative;
     width: 100%;
     height: 14rem;
     overflow: hidden;
-    border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
   }
 
   &__thumbnail {
@@ -92,6 +95,7 @@ const basePrice = computed(() => {
     transform: translate(-50%, -50%);
     display: block;
     width: 100%;
+    transition: transform .1s linear;
   }
 
   &__footer {
@@ -102,8 +106,8 @@ const basePrice = computed(() => {
     padding: 8px 0 8px 8px;
     --tw-bg-opacity: 1;
     background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
-    border-bottom-left-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
   }
 
   &__price {
@@ -138,7 +142,6 @@ const basePrice = computed(() => {
     padding: 0.6rem;
     background: white;
     border: 2px solid #ddd;
-    border-radius: 8px;
 
     &:not(:last-child) {
       margin-right: 0.5rem;

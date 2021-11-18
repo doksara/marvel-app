@@ -1,5 +1,5 @@
 <template>
-  <div class="spinner">
+  <div class="c-spinner">
     <div></div>
     <div></div>
     <div></div>
@@ -8,7 +8,7 @@
 </template>
 
 <style lang="scss" scoped>
-.spinner {
+.c-spinner {
   display: inline-block;
   position: relative;
   width: 80px;

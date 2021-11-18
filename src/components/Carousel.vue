@@ -1,11 +1,11 @@
 <template>
-  <div class="carousel">
-    <img src="../assets/background.jpg" alt="Sample">
+  <div class="c-carousel">
+    <img src="../assets/backgrounds/9-horizontal-original.jpg" alt="Sample">
   </div>
 </template>
 
 <style lang="scss" scoped>
-.carousel {
+.c-carousel {
   position: relative;
   width: 100%;
   height: 20rem;
