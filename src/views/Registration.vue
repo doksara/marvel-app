@@ -38,8 +38,11 @@ import { reactive } from 'vue'
 import FormInput from '../components/FormInput.vue';
 import BaseButton from '../components/BaseButton.vue'
 import { useAuthStore } from '../store/authStore';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
+const router = useRouter()
+
 const registrationDetails = reactive({
   username: '',
   password: '',
@@ -48,13 +51,12 @@ const registrationDetails = reactive({
 })
 
 const submit = () => {
-  console.log(registrationDetails.username)
-  console.log(registrationDetails.password)
   authStore.registerUser({
     username: registrationDetails.username, 
     password: registrationDetails.password,
     name: registrationDetails.name
   })
+  router.push('/login')
 }
 </script>
 
@@ -63,8 +65,7 @@ const submit = () => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
-  column-gap: 10px;
-  height: 100%;
+  min-height: 100vh;
 
   &__form {
     display: flex;

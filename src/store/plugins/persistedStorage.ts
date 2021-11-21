@@ -1,11 +1,17 @@
 import { watch } from 'vue'
-import { PiniaPluginContext, _GettersTree } from 'pinia'
+import { PiniaPluginContext, StoreActions, _GettersTree } from 'pinia'
 
 type Store = PiniaPluginContext['store'];
 
+type PersistOptions = {
+  key: string
+  storage: StorageOptions
+}
+type StorageOptions = typeof localStorage | typeof indexedDB
+
 declare module 'pinia' {
   export interface DefineStoreOptions<Id extends string, S extends StateTree, G extends _GettersTree<S>, A> {
-    persist?: boolean;
+    persistOptions?: PersistOptions
   }
 }
 
@@ -17,17 +23,17 @@ const updateStorage = (store: Store) => {
 }
 
 const loadStorage = (store: Store) => {
-  store.$state = JSON.parse(sessionStorage.getItem(store.$id) || '{}')
+  store.$state = JSON.parse(localStorage.getItem(store.$id) || '{}')
 }
 
 export default ({ options, store }: PiniaPluginContext): void => {
-  if (options.persist) {
+  if (options.persistOptions) {
     // Define default settings here
     const defaultSettings = {
       key: store.$id,
       storage: localStorage,
     }
-
+    console.log(store.$state)
     const storageResult = defaultSettings?.storage?.getItem(defaultSettings.key || '')
 
     if (storageResult) {
@@ -37,11 +43,6 @@ export default ({ options, store }: PiniaPluginContext): void => {
 
     // Load store data from storage
     loadStorage(store)
-
-    // Add method for clearing persisted storage
-    store.clearPersistedStorage = () => {
-      defaultSettings.storage.removeItem(defaultSettings.key)
-    }
 
     // Watch the store for changes
     watch(() => store.$state, () => {

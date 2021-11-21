@@ -1,3 +1,9 @@
+export interface NotificationItemProps {
+  id: string
+  message: string
+  type: 'success' | 'warning' | 'info' | 'error'
+}
+
 export interface ComicDataWrapper {
   code?: number
   status?: string

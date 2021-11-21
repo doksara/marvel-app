@@ -11,12 +11,12 @@
       <div class="c-card__actions">
         <button @click="$emit('addToCart')" class="c-card__button shadow-sm" title="Add to Cart">
           <svg class="c-card__button-icon">
-            <use xlink:href="../assets/symbol-defs.svg#icon-shopping-cart" />
+            <use xlink:href="../assets/icons/symbol-defs.svg#icon-shopping-cart" />
           </svg>
         </button>
         <button @click="$emit('addToWatchlist')" class="c-card__button shadow-sm" title="Add to Watchlist">
           <svg class="c-card__button-icon">
-            <use xlink:href="../assets/symbol-defs.svg#icon-book-open" />
+            <use xlink:href="../assets/icons/symbol-defs.svg#icon-book-open" />
           </svg>
         </button>
       </div>

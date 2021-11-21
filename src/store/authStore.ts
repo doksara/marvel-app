@@ -40,8 +40,12 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     logoutUser() {
-      console.log('Logout..')
+      this.currentUser = null
+      localStorage.removeItem('auth')
     }
   },
-  persist: true
+  persistOptions: {
+    key: 'auth',
+    storage: localStorage
+  }
 })

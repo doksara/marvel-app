@@ -3,14 +3,17 @@
     class="c-btn"
     :class="styleClasses"
     :type="props.type"
-    :disabled="props.disabled"
+    :disabled="props.disabled || props.isLoading"
     :title="props.text"
   >
     <div class="c-btn__inner">
       <slot></slot>
       <span v-if="props.text" class="c-btn__text">
-        {{ buttonText }}
+        {{ text }}
       </span>
+      <svg v-if="props.isLoading" class="c-btn__icon">
+        <use xlink:href="../assets/icons/symbol-defs.svg#spinner" />
+      </svg>
     </div>
   </button>
 </template>
@@ -40,10 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
   disabled: false,
   isLoading: false
-})
-
-const buttonText = computed(() => {
-  return props.isLoading ? 'Učitavanje..' : props.text;
 })
 
 const styleClasses = computed(() => {
@@ -84,6 +83,17 @@ const styleClasses = computed(() => {
     align-items: center;
     width: 100%;
     text-align: center;
+  }
+
+  &__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: #888;
+
+    animation-name: spin;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
   }
  
   &--primary {
@@ -131,5 +141,14 @@ const styleClasses = computed(() => {
   &--adaptive {
     font-size: inherit;
   }
+
+  @keyframes spin {
+    from {
+      transform:rotate(0deg);
+    }
+    to {
+      transform:rotate(360deg);
+    }
+}
 }
 </style>

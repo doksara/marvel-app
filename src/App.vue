@@ -1,8 +1,17 @@
 <template>
   <main>
     <router-view></router-view>
+    <NotificationList :list="globalStore.notifications" />
   </main>
 </template>
+
+<script setup lang="ts">
+import NotificationList from './components/NotificationList.vue';
+import { useGlobalStore } from './store/globalStore';
+
+const globalStore = useGlobalStore()
+
+</script>
 
 <style lang="scss">
 @use './styles/abstracts' as abs;
@@ -19,6 +28,6 @@
 }
 
 html, body, main {
-  height: 100vh;
+  min-height: 100vh;
 }
 </style>

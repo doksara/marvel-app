@@ -23,7 +23,7 @@
 .link {
   display: inline-block;
   color: white;
-  padding: 1em 1.5em;
+  padding: 1em 0;
   text-decoration: none;
   text-transform: uppercase;
 

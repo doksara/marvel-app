@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../store/authStore';
 import Comics from '@/views/Comics.vue'
+import ComicDetails from '@/views/ComicDetails.vue'
 import Cart from '@/views/Cart.vue'
 import Login from '@/views/Login.vue'
 import Orders from '@/views/Orders.vue'
@@ -21,6 +22,12 @@ const routes = [
     meta: { authorize: false }
   },
   {
+    path: '/',
+    name: 'Home',
+    component: Home,
+    meta: { authorize: false }
+  },
+  {
     path: '/home',
     name: 'Home',
     component: Home,
@@ -30,7 +37,15 @@ const routes = [
         path: '/comics',
         name: 'Comics',
         component: Comics,
-        meta: { authorize: false }
+        meta: { authorize: false },
+        children: [
+          {
+            path: '/comics/:id',
+            name: 'ComicDetails',
+            component: ComicDetails,
+            meta: { authorize: true }
+          }
+        ]
       },
       {
         path: '/cart',

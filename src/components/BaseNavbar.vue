@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar px-48">
     <ul class="navbar__list">
       <li class="navbar__item">
         <BaseLink to="/comics" text="Comics" />
@@ -10,12 +10,27 @@
       <li class="navbar__item">
         <BaseLink to="/orders" text="My Orders" />
       </li>
+      <li class="navbar__item">
+        <a @click="logout">Logout</a>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../store/authStore';
 import BaseLink from './BaseLink.vue'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+const logout = () => {
+  console.log("a")
+  authStore.logoutUser()
+  router.push('/login')
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -27,12 +42,20 @@ import BaseLink from './BaseLink.vue'
   &__list {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   &__item {
     display: inline-block;
     font-size: 1.25rem;
+
+    &:not(:last-child):not(:first-child) {
+      margin-left: 3rem;
+    }
+
+    &:last-child {
+      margin-left: auto;
+    }
   }
 }
 </style>
