@@ -28,7 +28,7 @@
 
   &:hover,
   &:active {
-    font-weight: 700;
+    
   }
 }
 

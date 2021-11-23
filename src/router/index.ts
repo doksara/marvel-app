@@ -11,7 +11,7 @@ import Home from '@/views/Home.vue'
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'l',
     component: Home,
     meta: { authorize: false }
   },

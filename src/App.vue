@@ -21,7 +21,7 @@ const globalStore = useGlobalStore()
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background: abs.$warm-grey-100;
+  background: #eee;
   color: #2c3e50;
 
   min-height: 100%;

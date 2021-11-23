@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Comic } from '../interfaces'
+import { getBasePrice, getImgPath } from '../utils/utils';
 
 // Props
 interface Props {
@@ -38,30 +39,10 @@ const props = withDefaults(defineProps<Props>(), {
   comic: undefined
 })
 
+const imgPath = computed(() => getImgPath(props.comic))
+const basePrice = computed(() => getBasePrice(props.comic))
+
 const emit = defineEmits(['addToCart', 'addToWatchlist']);
-
-// Creates an URL to image by concatenating
-// path and extension of thumbnail data
-const imgPath = computed(() => {
-  if (props.comic.thumbnail) {
-    const { path, extension } = props.comic.thumbnail
-
-    return path?.concat('.').concat(extension ? extension : '')
-  }
-
-  return ''
-})
-
-// Formats the base comic price
-const basePrice = computed(() => {
-  const { prices } = props.comic
-  if (prices && prices[0]) {
-    return `${Number(prices[0].price).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    })}`
-  }
-})
 
 </script>
 

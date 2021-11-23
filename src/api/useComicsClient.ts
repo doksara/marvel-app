@@ -3,11 +3,11 @@ import { ref } from 'vue'
 import { Comic, ComicDataWrapper } from '../interfaces'
 
 const URL = '/comics'
+const comicData = ref<Array<Comic>>()
 
 export const useComicsClient = () => {
   const isLoading = ref(false)
   const error = ref(null)
-  const comicData = ref<Array<Comic>>()
 
   const fetchComics = async () => {
     isLoading.value = true

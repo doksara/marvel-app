@@ -37,6 +37,7 @@ import BaseButton from '../components/BaseButton.vue'
 import { useAuthStore } from '../store/authStore'
 import { useGlobalStore } from '../store/globalStore'
 import { delay } from '../utils/utils'
+import { useRouter } from 'vue-router'
 
 const username = ref('')
 const password = ref('')
@@ -44,6 +45,7 @@ const isLoading = ref(false)
 
 const authStore = useAuthStore()
 const globalStore = useGlobalStore()
+const router = useRouter()
 
 const submit = async () => {
   isLoading.value = true
@@ -71,6 +73,8 @@ const submit = async () => {
   }
 
   isLoading.value = false
+
+  router.push('/home')
 }
 
 defineExpose({

@@ -1,9 +1,7 @@
 <template>
   <main>
     <Carousel />
-    <div class="container">
-      <BaseNavbar />
-    </div>
+    <BaseNavbar />
     <router-view></router-view>
   </main>
 </template>
