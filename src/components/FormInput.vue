@@ -72,7 +72,7 @@ const updateValue = (event: any) => {
   }
 
   &__label {
-    font-size: 1.45rem;
+    font-size: 1.30rem;
     font-weight: 500;
     flex-shrink: 0;
     margin-right: abs.$spacing-lg;
@@ -81,9 +81,14 @@ const updateValue = (event: any) => {
   &__field {
     display: block;
     position: relative;
-    border-radius: 4px;
+    border-radius: 2px;
     font-size: 1.15em;
     padding: .4rem;
+    color: abs.$warm-grey-900;
+
+    &:focus {      
+      outline: 2px solid abs.$yellow-vivid-400;
+    }
   }
 
   &__note {

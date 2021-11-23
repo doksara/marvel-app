@@ -5,12 +5,12 @@
     aria-live="assertive"
     :class="notificationStyle"
   >
-    <font-awesome-icon
-      class="c-notification-item__icon"
-      size="1x"
-      :icon="iconStyle"
-    />
-    <p class="c-notification__message">
+    <svg class="c-notification-item__icon">
+      <use v-if="props.type === 'success'" xlink:href="../assets/icons/symbol-defs.svg#icon-check-circle" />
+      <use v-if="props.type === 'error'" xlink:href="../assets/icons/symbol-defs.svg#icon-x-circle" />
+      <use v-if="props.type === 'info'" xlink:href="../assets/icons/symbol-defs.svg#icon-alert-circle" />
+    </svg>
+    <p class="c-notification-item__message">
       {{ props.message }}
     </p>
     <button
@@ -34,7 +34,7 @@ const timeout = ref()
 export interface NotificationItemProps {
   id: string
   message: string
-  type: 'success' | 'warning' | 'info' | 'error'
+  type: 'success' | 'info' | 'error'
 }
 
 const props = defineProps<NotificationItemProps>()
@@ -54,30 +54,13 @@ const dismissNotification = (id: string) => {
   globalStore.dismissNotification(id)
 }
 
-
 const notificationStyle = computed(() => {
   return {
     'c-notification-item--success': props.type === 'success',
-    'c-notification-item--warning': props.type === 'warning',
     'c-notification-item--info': props.type === 'info',
     'c-notification-item--error': props.type === 'error',
   };
 })
-
-const iconStyle = computed(() => {
-  switch (props.type) {
-    case 'success':
-      return 'check-circle';
-    case 'warning':
-      return 'exclamation-circle';
-    case 'info':
-      return 'info-circle';
-    case 'error':
-      return 'exclamation-triangle';
-    default:
-      return 'info-circle';
-  }
-}) 
 </script>
 
 <style lang="scss" scoped>
@@ -95,6 +78,8 @@ const iconStyle = computed(() => {
   margin-bottom: abs.$spacing-md;
 
   &__icon {
+    width: 1rem;
+    height: 1rem;
     fill: currentColor;
     margin-right: abs.$spacing-sm;
   }
@@ -119,12 +104,6 @@ const iconStyle = computed(() => {
     color: hsl(125, 86%, 14%);
     background: hsl(122, 42%, 75%);
     border-color: hsl(123, 35%, 51%);
-  }
-
-  &--warning {
-    color: hsl(42, 86%, 17%);
-    background: hsl(45, 86%, 81%);
-    border-color: hsl(43, 89%, 70%);
   }
 
   &--info {

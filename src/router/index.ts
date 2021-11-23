@@ -10,6 +10,12 @@ import Home from '@/views/Home.vue'
 
 const routes = [
   {
+    path: '/',
+    name: 'Home',
+    component: Home,
+    meta: { authorize: false }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login,
@@ -19,12 +25,6 @@ const routes = [
     path: '/register',
     name: 'Registration',
     component: Registration,
-    meta: { authorize: false }
-  },
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
     meta: { authorize: false }
   },
   {

@@ -1,6 +1,8 @@
 <template>
   <router-link class="link" :to="props.to">
-    <span>{{ props.text }}</span>
+    <span>
+      <slot></slot>
+    </span>
   </router-link>
 </template>
 
@@ -8,13 +10,11 @@
   // Props
   interface Props {
     to: string
-    text: string
   }
 
   // Defaults
   const props = withDefaults(defineProps<Props>(), {
     to: '/',
-    text: ''
   })
 </script>
 
@@ -25,7 +25,6 @@
   color: white;
   padding: 1em 0;
   text-decoration: none;
-  text-transform: uppercase;
 
   &:hover,
   &:active {

@@ -12,7 +12,7 @@
         {{ text }}
       </span>
       <svg v-if="props.isLoading" class="c-btn__icon">
-        <use xlink:href="../assets/icons/symbol-defs.svg#spinner" />
+        <use xlink:href="../assets/icons/symbol-defs.svg#icon-spinner" />
       </svg>
     </div>
   </button>
@@ -69,13 +69,18 @@ const styleClasses = computed(() => {
  
   padding: .35rem abs.$spacing-md;
   font-weight: 500;
-  border-radius: abs.$border-radius-md;
   transition: all .3s ease;
   outline: none;
- 
+
+  border-radius: abs.$border-radius-sm;
   border-width: 1px;
   border-style: solid;
   color: abs.$warm-grey-050;
+
+  &:disabled {
+    border-color: abs.$warm-grey-300 !important;
+    background: abs.$warm-grey-300 !important;
+  }
  
   &__inner {
     display: flex;
@@ -86,12 +91,13 @@ const styleClasses = computed(() => {
   }
 
   &__icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    fill: #888;
+    width: 1rem;
+    height: 1rem;
+    fill: white;
+    margin-left: .35rem;
 
     animation-name: spin;
-    animation-duration: 5000ms;
+    animation-duration: 1000ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear; 
   }
@@ -102,7 +108,8 @@ const styleClasses = computed(() => {
  
     &:hover,
     &:focus,
-    &:active {
+    &:active,
+    &:not(:disabled) {
       color: abs.$warm-grey-050;
       border-color: abs.$red-500;
       background-color: rgba(abs.$red-500, .85);
