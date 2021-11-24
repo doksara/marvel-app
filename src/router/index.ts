@@ -7,6 +7,7 @@ import Login from '@/views/Login.vue'
 import Orders from '@/views/Orders.vue'
 import Registration from '@/views/Registration.vue'
 import Home from '@/views/Home.vue'
+import Checkout from '@/views/Checkout.vue'
 
 const routes = [
   {
@@ -57,6 +58,12 @@ const routes = [
         path: '/orders',
         name: 'Orders',
         component: Orders,
+        meta: { authorize: true }
+      },
+      {
+        path: '/checkout',
+        name: 'Checkout',
+        component: Checkout,
         meta: { authorize: true }
       },
     ]

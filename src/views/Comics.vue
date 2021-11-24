@@ -1,6 +1,6 @@
 <template>
-  <div class="container mx-auto px-48">
-    <div v-if="isLoading" class="flex flex-col items-center justify-center">
+  <div class="v-comics container mx-auto px-48">
+    <div v-if="isLoading && !isInitialized" class="flex flex-col items-center justify-center">
       <Spinner />
     </div>
     <div v-else class="grid grid-cols-4 gap-x-5 gap-y-10">
@@ -12,23 +12,35 @@
         @add-to-watchlist="addToWatchlist(comic)" 
       />
     </div>
+    <div>
+      <BaseButton
+        v-if="isInitialized"
+        text="Load more comics"
+        type="button"
+        class="mt-6"
+        :is-loading="isLoading"
+        @click="loadMoreComics"
+      ></BaseButton>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useComicsClient } from '../api/useComicsClient'
-import Spinner from '../components/Spinner.vue'
-import ComicCard from '../components/ComicCard.vue'
 import { Comic } from '../interfaces'
 import { useCartStore } from '../store/cartStore'
 import { useWatchlistStore } from '../store/watchlistStore'
 import { useGlobalStore } from '../store/globalStore'
+import BaseButton from '../components/BaseButton.vue'
+import ComicCard from '../components/ComicCard.vue'
+import Spinner from '../components/Spinner.vue'
 
 const { isLoading, error, comicData, fetchComics } = useComicsClient()
 const cartStore = useCartStore()
 const watchlistStore = useWatchlistStore()
 const globalStore = useGlobalStore()
+let isInitialized = false
 
 const addToCart = (comic: Comic) => {
   cartStore.addToCart(comic)
@@ -48,8 +60,12 @@ const addToWatchlist = (comic: Comic) => {
   })
 }
 
+const loadMoreComics = async () => {
+  await fetchComics()
+}
+
 onMounted(async () => {
-  if (!comicData.value) {
+  if (!comicData) {
     await fetchComics()
 
     if (error.value) {
@@ -58,6 +74,14 @@ onMounted(async () => {
         type: 'error'
       })
     }
+
+    isInitialized = true
   }
 })
 </script>
+
+<style lang="scss">
+.v-comics {
+  padding-bottom: 2rem;
+}
+</style>

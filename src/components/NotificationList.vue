@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
 @use '../styles/abstracts' as abs;
 
 .c-notification-list {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: abs.$spacing-md;
   min-width: 320px;

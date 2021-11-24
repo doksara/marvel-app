@@ -1,9 +1,11 @@
 import HTTP from './baseClient'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { Comic, ComicDataWrapper } from '../interfaces'
 
 const URL = '/comics'
-const comicData = ref<Array<Comic>>()
+const comicData = reactive<Array<Comic>>([])
+const offset = ref(0)
+//const limit = ref(20)
 
 export const useComicsClient = () => {
   const isLoading = ref(false)
@@ -13,10 +15,18 @@ export const useComicsClient = () => {
     isLoading.value = true
 
     await HTTP
-      .get<ComicDataWrapper>(URL)
+      .get<ComicDataWrapper>(URL, {
+        params: {
+          offset: offset.value
+        }
+      })
       .then((response) => {
         if (response.data.data?.results){
-          comicData.value = response.data.data.results
+          response.data.data.results.forEach(item => {
+            comicData.push(item)
+          })
+          offset.value += 20
+          //limit.value += 20
         }
       })
       .catch(err => {

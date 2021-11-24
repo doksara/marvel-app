@@ -1,7 +1,7 @@
 export interface NotificationItemProps {
   id: string
   message: string
-  type: 'success' | 'warning' | 'info' | 'error'
+  type: 'success' | 'error' | 'info'
 }
 
 export interface ComicDataWrapper {
@@ -23,7 +23,7 @@ export interface ComicDataContainer {
 }
 
 export interface Comic {
-  id?: number
+  id: number
   digitalId?: number
   title?: string
   issuenumber?: number

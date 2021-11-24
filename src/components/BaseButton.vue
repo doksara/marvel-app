@@ -30,7 +30,7 @@ export type ButtonSize = 'small' | 'medium' | 'large' | 'adaptive'
 interface Props {
   text: string
   type?: ButtonType
-  style?: ButtonStyle
+  buttonStyle?: ButtonStyle
   size?: ButtonSize
   disabled?: boolean
   isLoading?: boolean
@@ -39,7 +39,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   text: undefined,
   type: 'button',
-  style: 'primary',
+  buttonStyle: 'primary',
   size: 'medium',
   disabled: false,
   isLoading: false
@@ -47,8 +47,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const styleClasses = computed(() => {
   return {
-    'c-btn--primary': props.style === 'primary',
-    'c-btn--secondary': props.style === 'secondary',
+    'c-btn--primary': props.buttonStyle === 'primary',
+    'c-btn--secondary': props.buttonStyle === 'secondary',
+    'c-btn--success': props.buttonStyle === 'success',
     'c-btn--small': props.size === 'small',
     'c-btn--medium': props.size === 'medium',
     'c-btn--large': props.size === 'large',
@@ -128,6 +129,22 @@ const styleClasses = computed(() => {
     }
   }
  
+  // Styles
+
+  &--success {
+    border-color: hsl(123, 35%, 51%);
+    background: hsl(123, 35%, 51%);
+    color: white;
+    
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: hsl(123, 35%, 51%);
+      background: hsl(122, 42%, 75%);
+      color: hsl(125, 86%, 14%);
+    }
+  }
+
   // Sizes
  
   &--small {
