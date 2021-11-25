@@ -1,32 +1,41 @@
-/*
 import { reactive, toRefs, watch, onBeforeUnmount, computed, ComputedRef } from 'vue'
 
-type ValidationOptions = {
-  [key: string]: Array<(v: string) => string | undefined>;
+export type ValidationFunction = (v: string) => string | undefined
+
+export type ValidationOptions = {
+  [key: string]: Array<ValidationFunction>
 };
 
 type ValidatorParent = {
   [key: string]: Validator
 }
 
-type Validator = {
+export type Validator = {
   errors?: Array<string> | null
   touched?: boolean
   valid?: boolean | ComputedRef<boolean>
   validate?: any
 }
 
-type X = { [key: string]: Validator | boolean | ComputedRef<boolean> }
+type FormState = {
+  [key: string]: string | any
+  $validation: ValidationState
+}
 
-export default function (rules: ValidationOptions) {
+type ValidationState = {
+  [key: string]: any | Validator
+  valid: boolean | ComputedRef<boolean>
+}
+
+export function useValidation(rules: ValidationOptions) {
   const fields = Object.keys(rules);
-  const $validation: X = reactive({
+  const $validation: ValidationState = reactive({
     valid: false
   });
 
-  const values = fields.reduce((acc: ValidatorParent, field) => {
+  const values = fields.reduce((acc: any, field) => {
     const valid = !rules[field].includes(required);
-    acc[field] = {};
+    acc[field] = "";
     // Only add the validation results if theres any validation rule
     if (rules[field].length) {
       $validation[field] = {
@@ -47,7 +56,7 @@ export default function (rules: ValidationOptions) {
       .every((v) => !!v);
   });
 
-  const state = reactive({
+  const state: FormState = reactive({
     ...values,
     $validation: toRefs($validation)
   });
@@ -72,11 +81,11 @@ export default function (rules: ValidationOptions) {
   return state;
 }
 
-function validate(state, field, rules) {
+function validate(state: any, field: string, rules: any) {
   const value = state[field];
   const isRequired = rules.includes(required);
   const errorMessages = rules
-    .map((r) => {
+    .map((r: any) => {
       if (!isRequired && !value) {
         return null;
       }
@@ -92,7 +101,7 @@ function validate(state, field, rules) {
 
 // Validation rules
 // Required
-export function required(v: string) {
+export function required(v: string){
   if (v === "") {
     return "This field is required";
   }
@@ -123,13 +132,3 @@ export function password(v: string) {
     return "Must contain numbers, lowercase and uppercase letters";
   }
 }
-
-// Validate than the value is the same as the given
-export function sameAs(field: string) {
-  return (v, state) => {
-    if (state[field] && state[field] !== v) {
-      return `Must match the "${field}" field`;
-    }
-  };
-}
- */

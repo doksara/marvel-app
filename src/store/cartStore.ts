@@ -39,8 +39,5 @@ export const useCartStore = defineStore('cart', {
       return this.deliveryFee + this.subtotal
     }
   },
-  persistOptions: {
-    key: 'cart',
-    storage: localStorage
-  }
+  persist: true
 })

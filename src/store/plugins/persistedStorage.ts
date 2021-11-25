@@ -1,17 +1,11 @@
 import { watch } from 'vue'
-import { PiniaPluginContext, StoreActions, _GettersTree } from 'pinia'
+import { PiniaPluginContext, _GettersTree } from 'pinia'
 
 type Store = PiniaPluginContext['store'];
 
-type PersistOptions = {
-  key: string
-  storage: StorageOptions
-}
-type StorageOptions = typeof localStorage | typeof indexedDB
-
 declare module 'pinia' {
   export interface DefineStoreOptions<Id extends string, S extends StateTree, G extends _GettersTree<S>, A> {
-    persistOptions?: PersistOptions
+    persist?: true
   }
 }
 
@@ -27,13 +21,13 @@ const loadStorage = (store: Store) => {
 }
 
 export default ({ options, store }: PiniaPluginContext): void => {
-  if (options.persistOptions) {
+  if (options.persist) {
     // Define default settings here
     const defaultSettings = {
       key: store.$id,
       storage: localStorage,
     }
-    console.log(store.$state)
+
     const storageResult = defaultSettings?.storage?.getItem(defaultSettings.key || '')
 
     if (storageResult) {

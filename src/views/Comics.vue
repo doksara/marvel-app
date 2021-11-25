@@ -1,9 +1,9 @@
 <template>
   <div class="v-comics container mx-auto px-48">
-    <div v-if="isLoading && !isInitialized" class="flex flex-col items-center justify-center">
+    <div v-if="isLoading" class="flex flex-col items-center justify-center">
       <Spinner />
     </div>
-    <div v-else class="grid grid-cols-4 gap-x-5 gap-y-10">
+    <div class="grid grid-cols-4 gap-x-5 gap-y-10">
       <ComicCard 
         v-for="comic in comicData" 
         :key="comic.id" 
@@ -14,7 +14,6 @@
     </div>
     <div>
       <BaseButton
-        v-if="isInitialized"
         text="Load more comics"
         type="button"
         class="mt-6"
@@ -40,7 +39,6 @@ const { isLoading, error, comicData, fetchComics } = useComicsClient()
 const cartStore = useCartStore()
 const watchlistStore = useWatchlistStore()
 const globalStore = useGlobalStore()
-let isInitialized = false
 
 const addToCart = (comic: Comic) => {
   cartStore.addToCart(comic)
@@ -74,8 +72,6 @@ onMounted(async () => {
         type: 'error'
       })
     }
-
-    isInitialized = true
   }
 })
 </script>

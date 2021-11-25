@@ -8,21 +8,24 @@
           id="username"
           label="Username"
           class="mb-4"
-          v-model="registrationDetails.username"
+          v-model="form.username"
+          :validation="form.$validation.username"
         />
         <FormInput 
           id="password"
           label="Password"
           type="password"
           class="mb-4"
-          v-model="registrationDetails.password"
+          v-model="form.password"
+          :validation="form.$validation.password"
         />
         <FormInput 
           id="confirmPassword"
           label="Confirm password"
           type="password"
           class="mb-4"
-          v-model="registrationDetails.confirmPassword"
+          v-model="form.confirmPassword"
+          :validation="form.$validation.confirmPassword"
         />
         <BaseButton 
           text="Register"
@@ -31,55 +34,67 @@
           :is-loading="isLoading"
         ></BaseButton>
         <hr class="v-registration__divider"/>
-        <router-link class="v-registration__link" to="/login">Already have an account yet? Log in here.</router-link>
+        <BaseLink class="text-center" to="/login">Already have an account yet? Log in here.</BaseLink>
       </div>
     </form>
   </section>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import FormInput from '../components/FormInput.vue';
 import BaseButton from '../components/BaseButton.vue'
+import BaseLink from '../components/BaseLink.vue';
+import { ref } from 'vue'
 import { useAuthStore } from '../store/authStore';
 import { useRouter } from 'vue-router';
-import { delay } from '../utils/utils';
 import { useGlobalStore } from '../store/globalStore';
+import { email, minLength, password, required, useValidation } from '../composables/validation';
+import { delay } from '../utils/utils';
 
 const authStore = useAuthStore()
 const globalStore = useGlobalStore()
 const router = useRouter()
 
 const isLoading = ref(false)
-const registrationDetails = reactive({
-  username: '',
-  password: '',
-  confirmPassword: '',
-  name: ''
-})
+
+// My form with validation rules
+const form = useValidation({
+  fullName: [required],
+  username: [required, minLength(2)],
+  password: [
+    required,
+    minLength(8),
+    password,
+  ],
+  confirmPassword: [
+    required,
+    minLength(8),
+    password,
+  ],
+  email: [required, email]
+});
 
 const submit = async () => {
-  if (registrationDetails.username !== '' && registrationDetails.password !== '' && registrationDetails.confirmPassword !== '') {
-    isLoading.value = true
-  
-    authStore.registerUser({
-      username: registrationDetails.username, 
-      password: registrationDetails.password,
-      name: registrationDetails.name
-    })
-  
-    globalStore.pushNotification({
-      message: 'Successful registration. Redirecting..',
-      type: 'success'
-    })
-  
-    // Simulate waiting..
-    await delay(1500)
+  isLoading.value = true
 
-    isLoading.value = false
-  
-    router.push('/login')
-  }
+  authStore.registerUser({
+    fullName: form.fullName,
+    username: form.username, 
+    password: form.password,
+    email: form.email
+  })
+
+  globalStore.pushNotification({
+    message: 'Successful registration. Redirecting..',
+    type: 'success'
+  })
+
+  // Simulate waiting..
+  await delay(1500)
+
+  isLoading.value = false
+
+  router.push('/login')
 }
 </script>
 
@@ -90,10 +105,9 @@ const submit = async () => {
   grid-template-columns: 5fr 6fr;
   grid-template-rows: auto;
   min-height: 100vh;
-  color: white;
+  color: abs.$warm-grey-900;
   text-align: left;
-  background-color: abs.$warm-grey-700;
-  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fff' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background: #eee;
 
   &__form {
     display: flex;
@@ -102,23 +116,16 @@ const submit = async () => {
   }
 
   &__formcontainer {
-    background-color: rgba(abs.$warm-grey-600, .85);
+    width: 45%;
+    background-color: white;
     padding: 3.5rem;
+    box-shadow: abs.$box-shadow-sm;
   }
   
   &__divider {
     background: rgba(255, 255, 255, 0.1);
     width: 70%;
     margin: 1.25rem auto 1rem auto;
-  }
-
-  &__link {
-    color: white;
-
-    &:hover,
-    &:active {
-      color: abs.$red-200;
-    }
   }
 
   &__background {

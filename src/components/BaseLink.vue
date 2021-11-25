@@ -20,15 +20,16 @@
 
 
 <style lang="scss" scoped>
+@use '../styles/abstracts' as abs;
+
 .link {
   display: inline-block;
-  color: white;
-  padding: 1em 0;
+  color: abs.$red-500;
   text-decoration: none;
 
   &:hover,
   &:active {
-    
+    color: abs.$red-800;
   }
 }
 

@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
 
 export type User = {
+  fullName: string
   username: string
   password: string
-  name: string
+  email: string
 }
 
-export type LoginCredentials = Omit<User, 'name' | 'id'>
+export type LoginCredentials = Omit<User, 'fullName' | 'email'>
 
 export type ActiveUser = Omit<User, 'password'>
 
@@ -35,7 +36,8 @@ export const useAuthStore = defineStore('auth', {
       if (queryUser) {
         this.currentUser = {
           username: queryUser.username,
-          name: queryUser.name
+          fullName: queryUser.fullName,
+          email: queryUser.email
         }
       }
     },
@@ -44,8 +46,5 @@ export const useAuthStore = defineStore('auth', {
       localStorage.removeItem('auth')
     }
   },
-  persistOptions: {
-    key: 'auth',
-    storage: localStorage
-  }
+  persist: true
 })

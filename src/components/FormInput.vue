@@ -1,5 +1,60 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { Validator } from '../composables/validation'
+
+// Types
+type InputType = 'text' | 'number' | 'email' | 'tel' | 'password'
+
+// Props
+interface Props {
+  id: string
+  label: string
+  placeholder?: string
+  disabled?: boolean
+  type?: InputType
+  modelValue?: string | number
+  validation?: Validator
+}
+
+// Defaults
+const props = withDefaults(defineProps<Props>(), {
+  id: undefined,
+  label: undefined,
+  placeholder: undefined,
+  disabled: false,
+  type: 'text',
+  modelValue: undefined,
+  validation: undefined
+})
+
+const showErrors = ref(false);
+const isValid = computed(() => {
+  if (!props.validation) {
+    return true;
+  }
+
+  return !props.validation.errors;
+})
+
+const onInput = (event: any) => {
+  showErrors.value = false;
+  emit('update:modelValue', event.target.value)
+}
+
+const onBlur = (event: any) => {
+  if (!props.validation) {
+    return;
+  }
+
+  props.validation.validate();
+  showErrors.value = !!props.validation.errors;
+}
+
+const emit = defineEmits(['update:modelValue'])
+</script>
+
 <template>
-  <div class="c-input">
+  <div class="c-input" :class="{ 'c-input--error': !isValid }">
     <label class="c-input__label" :for="props.id">
       {{ props.label }}
     </label>
@@ -11,44 +66,18 @@
         :id="props.id"
         :placeholder="props.placeholder"
         :value="props.modelValue"
-        @input="updateValue"
+        @input="onInput"
+        @blur="onBlur"
       />
+    <p
+      class="text-sm text-red-600"
+      v-if="showErrors"
+    >
+      {{ props.validation && props.validation.errors && props.validation.errors[0] }}
+    </p>
     </div>
   </div>
 </template>
- 
-<script setup lang="ts">
-// Types
-type InputType = 'text' | 'number' | 'email' | 'tel' | 'password'
-
-// Props
-interface Props {
-  id: string
-  label: string
-  placeholder?: string
-  disabled?: boolean
-  focused?: boolean
-  type?: InputType
-  modelValue?: string | number
-}
-
-// Defaults
-const props = withDefaults(defineProps<Props>(), {
-  id: undefined,
-  label: undefined,
-  placeholder: undefined,
-  disabled: false,
-  focused: false,
-  type: 'text',
-  modelValue: undefined
-})
-
-const emit = defineEmits(['update:modelValue'])
-
-const updateValue = (event: any) => {
-  emit('update:modelValue', event.target.value)
-}
-</script>
 
 <style lang="scss"> 
 @use '../styles/abstracts' as abs;
@@ -72,7 +101,7 @@ const updateValue = (event: any) => {
   }
 
   &__label {
-    font-size: 1.30rem;
+    font-size: 1rem;
     font-weight: 500;
     flex-shrink: 0;
     margin-right: abs.$spacing-lg;
@@ -83,8 +112,12 @@ const updateValue = (event: any) => {
     position: relative;
     border-radius: 2px;
     font-size: 1.15em;
-    padding: .4rem;
+    padding: .3rem;
     color: abs.$warm-grey-900;
+    width: 100%;
+    border: 1px solid rgba(#333, .3);
+    background: white;
+    text-indent: abs.$text-indent-md;
 
     &:focus {      
       outline: 2px solid abs.$yellow-vivid-400;
