@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 
 export type User = {
-  fullName: string
   username: string
   password: string
   email: string
@@ -36,7 +35,6 @@ export const useAuthStore = defineStore('auth', {
       if (queryUser) {
         this.currentUser = {
           username: queryUser.username,
-          fullName: queryUser.fullName,
           email: queryUser.email
         }
       }

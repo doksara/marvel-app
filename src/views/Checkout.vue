@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import FormInput from '../components/FormInput.vue';
+
+const submit = () => {
+  
+}
+
+</script>
+
 <template>
   <div class="container mx-auto px-48 pb-10">
     <div class="v-checkout">
@@ -24,15 +33,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import FormInput from '../components/FormInput.vue';
-
-const submit = () => {
-  
-}
-
-</script>
 
 <style lang="scss">
 @use '../styles/abstracts' as abs;

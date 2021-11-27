@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { info } from 'console';
+import { computed } from 'vue';
 import { Validator } from '../composables/validation'
 
 // Types
@@ -27,7 +28,6 @@ const props = withDefaults(defineProps<Props>(), {
   validation: undefined
 })
 
-const showErrors = ref(false);
 const isValid = computed(() => {
   if (!props.validation) {
     return true;
@@ -37,7 +37,6 @@ const isValid = computed(() => {
 })
 
 const onInput = (event: any) => {
-  showErrors.value = false;
   emit('update:modelValue', event.target.value)
 }
 
@@ -46,8 +45,9 @@ const onBlur = (event: any) => {
     return;
   }
 
-  props.validation.validate();
-  showErrors.value = !!props.validation.errors;
+  if (props.validation.touched) {
+    props.validation.validate();
+  }
 }
 
 const emit = defineEmits(['update:modelValue'])
@@ -69,13 +69,16 @@ const emit = defineEmits(['update:modelValue'])
         @input="onInput"
         @blur="onBlur"
       />
+      <svg v-if="!isValid" class="c-input__icon">
+        <use xlink:href="../assets/icons/symbol-defs.svg#icon-alert-circle" />
+      </svg>
+    </div>
     <p
       class="text-sm text-red-600"
-      v-if="showErrors"
+      v-if="!isValid"
     >
       {{ props.validation && props.validation.errors && props.validation.errors[0] }}
     </p>
-    </div>
   </div>
 </template>
 
@@ -96,8 +99,10 @@ const emit = defineEmits(['update:modelValue'])
     @include abs.absolute-center(y);
     right: abs.$spacing-lg;
 
+    width: .85em;
+    height: .85em;
     font-size: 1.15em;
-    color: abs.$red-500;
+    fill: abs.$red-500;
   }
 
   &__label {

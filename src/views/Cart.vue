@@ -1,4 +1,48 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { useCartStore } from '../store/cartStore'
+import { useRouter } from 'vue-router';
+import { useGlobalStore } from '../store/globalStore';
+import { Comic } from '../interfaces';
+import { delay } from '../utils/utils';
+import BaseButton from '../components/BaseButton.vue';
+import BaseNavbar from '../components/BaseNavbar.vue';
+import CartItem from '../components/CartItem.vue'
+import Carousel from '../components/Carousel.vue';
+
+const cartStore = useCartStore()
+const globalStore = useGlobalStore()
+const router = useRouter()
+
+const isLoading = ref(false)
+
+const isCartEmpty = computed(() => {
+  return cartStore.items.length === 0
+})
+
+const removeFromCart = (comic: Comic) => {
+  cartStore.removeFromCart(comic.id)
+  globalStore.pushNotification({
+    type: 'success',
+    message: `Removed ${comic.title} from cart.`
+  })
+}
+
+const goToCheckout = async () => {
+  isLoading.value = true
+  
+  // Simulate waiting for response
+  await delay(1500)
+  
+  isLoading.value = false
+  router.push('/checkout')
+}
+
+</script>
+
 <template>
+  <Carousel />
+  <BaseNavbar />
   <div class="container mx-auto px-48 pb-10">
     <div class="v-cart">
       <div class="v-cart__overview">
@@ -54,46 +98,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useCartStore } from '../store/cartStore'
-import { useRouter } from 'vue-router';
-import { useGlobalStore } from '../store/globalStore';
-import { Comic } from '../interfaces';
-import { delay } from '../utils/utils';
-import CartItem from '../components/CartItem.vue'
-import BaseButton from '../components/BaseButton.vue';
-
-const cartStore = useCartStore()
-const globalStore = useGlobalStore()
-const router = useRouter()
-
-const isLoading = ref(false)
-
-const isCartEmpty = computed(() => {
-  return cartStore.items.length === 0
-})
-
-const removeFromCart = (comic: Comic) => {
-  cartStore.removeFromCart(comic.id)
-  globalStore.pushNotification({
-    type: 'success',
-    message: `Removed ${comic.title} from cart.`
-  })
-}
-
-const goToCheckout = async () => {
-  isLoading.value = true
-  
-  // Simulate waiting for response
-  await delay(1500)
-  
-  isLoading.value = false
-  router.push('/checkout')
-}
-
-</script>
 
 <style lang="scss">
 @use '../styles/abstracts' as abs;

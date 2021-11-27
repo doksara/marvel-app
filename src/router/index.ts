@@ -11,12 +11,6 @@ import Checkout from '@/views/Checkout.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'l',
-    component: Home,
-    meta: { authorize: false }
-  },
-  {
     path: '/login',
     name: 'Login',
     component: Login,
@@ -29,44 +23,34 @@ const routes = [
     meta: { authorize: false }
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: Home,
+    path: '/comics',
+    name: 'Comics',
+    component: Comics,
     meta: { authorize: false },
-    children: [
-      {
-        path: '/comics',
-        name: 'Comics',
-        component: Comics,
-        meta: { authorize: false },
-        children: [
-          {
-            path: '/comics/:id',
-            name: 'ComicDetails',
-            component: ComicDetails,
-            meta: { authorize: true }
-          }
-        ]
-      },
-      {
-        path: '/cart',
-        name: 'Cart',
-        component: Cart,
-        meta: { authorize: true }
-      },
-      {
-        path: '/orders',
-        name: 'Orders',
-        component: Orders,
-        meta: { authorize: true }
-      },
-      {
-        path: '/checkout',
-        name: 'Checkout',
-        component: Checkout,
-        meta: { authorize: true }
-      },
-    ]
+  },
+  {
+    path: '/comics/:id',
+    name: 'ComicDetails',
+    component: ComicDetails,
+    meta: { authorize: false }
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
+    meta: { authorize: true }
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: Orders,
+    meta: { authorize: true }
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: Checkout,
+    meta: { authorize: true }
   },
 ];
 

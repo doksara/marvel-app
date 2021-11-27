@@ -5,7 +5,7 @@
         <router-link active-class="c-navbar__link--active" class="c-navbar__link" to="/comics">Comics</router-link>
       </li>
       <li class="c-navbar__item">
-        <router-link active-class="c-navbar__link--active" class="c-navbar__link" to="/cart">
+        <router-link v-if="authStore.currentUser" active-class="c-navbar__link--active" class="c-navbar__link" to="/cart">
           <span>Shopping Cart</span>
           <svg class="c-navbar__link-icon">
             <use xlink:href="../assets/icons/symbol-defs.svg#icon-shopping-cart" />
@@ -92,6 +92,10 @@ const logout = () => {
     color: white;
     padding: .75em 0;
     text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     &-icon {
       width: .9em;

@@ -1,5 +1,5 @@
 <template>
-  <router-link class="link" :to="props.to">
+  <router-link class="c-link" :to="props.to">
     <span>
       <slot></slot>
     </span>
@@ -22,7 +22,7 @@
 <style lang="scss" scoped>
 @use '../styles/abstracts' as abs;
 
-.link {
+.c-link {
   display: inline-block;
   color: abs.$red-500;
   text-decoration: none;
