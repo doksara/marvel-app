@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import FormInput from '../components/FormInput.vue';
+import BaseNavbar from '../components/BaseNavbar.vue'
+import Carousel from '../components/Carousel.vue'
+import FormInput from '../components/FormInput.vue'
 
 const submit = () => {
   
@@ -8,6 +10,8 @@ const submit = () => {
 </script>
 
 <template>
+  <Carousel />
+  <BaseNavbar />
   <div class="container mx-auto px-48 pb-10">
     <div class="v-checkout">
     <form @submit.prevent="submit" class="v-login__form">

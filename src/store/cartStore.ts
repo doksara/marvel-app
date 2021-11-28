@@ -5,7 +5,7 @@ import { getBasePrice } from '../utils/utils'
 export type CartState = {
   items: Array<Comic>
   deliveryFee: number
-};
+}
 
 export const useCartStore = defineStore('cart', {
   state: () => {
@@ -19,7 +19,7 @@ export const useCartStore = defineStore('cart', {
       this.items.push(item)
     },
     removeFromCart(itemId: number) {
-      this.items = this.items.filter(item => item.id !== itemId);
+      this.items = this.items.filter(item => item.id !== itemId)
     }
   },
   getters: {

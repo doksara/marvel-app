@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '../store/authStore'
 import Comics from '@/views/Comics.vue'
 import ComicDetails from '@/views/ComicDetails.vue'
 import Cart from '@/views/Cart.vue'
@@ -10,6 +10,13 @@ import Home from '@/views/Home.vue'
 import Checkout from '@/views/Checkout.vue'
 
 const routes = [
+  {
+    path: '/',
+    redirect: {
+      name: 'Comics'
+    },
+    meta: { authorize: false }
+  },
   {
     path: '/login',
     name: 'Login',
@@ -52,12 +59,12 @@ const routes = [
     component: Checkout,
     meta: { authorize: true }
   },
-];
+]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-});
+})
 
 router.beforeEach((to, from, next) => {
   const { authorize } = to.meta
@@ -70,7 +77,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.name === 'Login' && currentUser) {
-    return next({ path: '/home' })
+    return next({ path: '/' })
   }
 
   return next()

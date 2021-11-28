@@ -4,7 +4,7 @@ export type ValidationFunction = (v: string, state?: any) => string | undefined
 
 export type ValidationOptions = {
   [key: string]: Array<ValidationFunction>
-};
+}
 
 export type Validator = {
   errors?: Array<string> | null
@@ -28,11 +28,11 @@ export function useValidation(rules: ValidationOptions) {
   
   const $validation: ValidationState = reactive({
     valid: false,
-  });
+  })
 
   const values = fields.reduce((acc: any, field) => {
     const valid = !rules[field].includes(required)
-    acc[field] = "";
+    acc[field] = ""
     // Only add the validation results if theres any validation rule
     if (rules[field].length) {
       $validation[field] = {
@@ -42,10 +42,10 @@ export function useValidation(rules: ValidationOptions) {
         validate() {
           validate(state, field, rules[field])
         }
-      };
+      }
     }
-    return acc;
-  }, {});
+    return acc
+  }, {})
 
   $validation.valid = computed(() => {
     return Object.values($validation)
@@ -105,9 +105,9 @@ export function required(v: string){
 
 // Email
 export function email(v: string) {
-  const email = /^[a-z\d!#$%&'*+\-/=?^_`{|}~]+@([\w-]+\.)+[\w-]{2,4}$/gi;
+  const email = /^[a-z\d!#$%&'*+\-/=?^_`{|}~]+@([\w-]+\.)+[\w-]{2,4}$/gi
   if (!email.test(v)) {
-    return "This is not a valid email";
+    return "This is not a valid email"
   }
 }
 
@@ -115,17 +115,17 @@ export function email(v: string) {
 export function minLength(len: number) {
   return function (v: string) {
     if (v.trim().length < len) {
-      return `The min length is ${len}`;
+      return `The min length is ${len}`
     }
-  };
+  }
 }
 
 // Password validation
 export function password(v: string) {
-  const valid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g.test(v);
+  const valid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g.test(v)
 
   if (!valid) {
-    return "Must contain numbers, lowercase and uppercase letters";
+    return "Must contain numbers, lowercase and uppercase letters"
   }
 }
 
@@ -133,7 +133,7 @@ export function password(v: string) {
 export function sameAs(field: string) {
   return (v: string, state: ValidationState) => {
     if (state[field] && state[field] !== v) {
-      return `Must match the "${field}" field`;
+      return `Must match the "${field}" field`
     }
-  };
+  }
 }

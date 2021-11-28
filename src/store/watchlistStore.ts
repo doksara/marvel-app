@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import { Comic } from '../interfaces'
 
 export type WatchlistState = {
-  items: Array<Comic>;
-};
+  items: Array<Comic>
+}
 
 export const useWatchlistStore = defineStore('watchlist', {
   state: () => {
@@ -16,7 +16,7 @@ export const useWatchlistStore = defineStore('watchlist', {
       this.items.push(item)
     },
     removeFromWatchlist(itemId: number) {
-      this.items.filter(item => item.id !== itemId);
+      this.items.filter(item => item.id !== itemId)
     }
   }
 })

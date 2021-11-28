@@ -39,7 +39,7 @@ const loadMoreComics = async () => {
 }
 
 onMounted(async () => {
-  if (!comicData) {
+  if (Object.keys(comicData).length === 0) {
     await fetchComics()
 
     if (error.value) {
@@ -56,26 +56,28 @@ onMounted(async () => {
   <Carousel />
   <BaseNavbar />
   <div class="v-comics container mx-auto px-48">
-    <div v-if="isLoading" class="flex flex-col items-center justify-center">
+    <div v-if="isLoading && Object.keys(comicData).length == 0" class="flex flex-col items-center justify-center">
       <Spinner />
     </div>
-    <div class="grid grid-cols-4 gap-x-5 gap-y-10">
-      <ComicCard 
-        v-for="comic in comicData" 
-        :key="comic.id" 
-        :comic="comic"
-        @add-to-cart="addToCart(comic)"
-        @add-to-watchlist="addToWatchlist(comic)" 
-      />
-    </div>
-    <div>
-      <BaseButton
-        text="Load more comics"
-        type="button"
-        class="mt-6"
-        :is-loading="isLoading"
-        @click="loadMoreComics"
-      ></BaseButton>
+    <div v-else>
+      <div class="grid grid-cols-4 gap-x-5 gap-y-10">
+        <ComicCard 
+          v-for="comic in comicData" 
+          :key="comic.id" 
+          :comic="comic"
+          @add-to-cart="addToCart(comic)"
+          @add-to-watchlist="addToWatchlist(comic)" 
+        />
+      </div>
+      <div>
+        <BaseButton
+          text="Load more comics"
+          type="button"
+          class="mt-6"
+          :is-loading="isLoading"
+          @click="loadMoreComics"
+        ></BaseButton>
+      </div>
     </div>
   </div>
 </template>

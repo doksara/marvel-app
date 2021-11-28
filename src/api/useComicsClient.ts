@@ -1,6 +1,6 @@
 import HTTP from './baseClient'
 import { reactive, ref } from 'vue'
-import { Comic, ComicDataWrapper } from '../interfaces'
+import { Character, CharacterDataWrapper, Comic, ComicDataWrapper } from '../interfaces'
 
 const URL = '/comics'
 const comicData = reactive<Record<string, Comic>>({})
@@ -27,6 +27,26 @@ export const useComicsClient = () => {
     
     isLoading.value = false
     return comic
+  }
+
+  const fetchComicCharacters = async (comicId: string): Promise<Array<Character>> => {
+    isLoading.value = true
+    let characters: Array<Character> = []
+
+    await HTTP
+      .get<CharacterDataWrapper>(`${URL}/${comicId}/characters`)
+      .then((response) => {
+        if (response.data.data?.results){
+          console.log(response.data.data.results)
+          characters = response.data.data?.results
+        }
+      })
+      .catch(err => {
+        error.value = err
+      })
+    
+    isLoading.value = false
+    return characters
   }
 
   const fetchComics = async () => {
@@ -58,6 +78,7 @@ export const useComicsClient = () => {
     error,
     comicData,
     fetchComics,
-    fetchSingleComic
+    fetchSingleComic,
+    fetchComicCharacters
   }
 }

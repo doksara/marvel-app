@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { NotificationItemProps } from '../interfaces'
+import NotificationItem from './NotificationItem.vue'
+
+// Types
+interface Props {
+  list: Array<NotificationItemProps>
+}
+
+// Props
+const props = withDefaults(defineProps<Props>(), {
+  list: undefined
+})
+</script>
+
 <template>
   <div class="c-notification-list">
     <transition-group name="list" tag="p">
@@ -11,20 +26,6 @@
     </transition-group>
   </div>
 </template>
-
-<script setup lang="ts">
-import { NotificationItemProps } from '../interfaces';
-import NotificationItem from './NotificationItem.vue';
-
-interface Props {
-  list: Array<NotificationItemProps>
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  list: undefined
-})
-
-</script>
 
 <style lang="scss" scoped>
 @use '../styles/abstracts' as abs;

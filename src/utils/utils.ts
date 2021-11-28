@@ -1,10 +1,10 @@
-import { Comic } from '../interfaces'
+import { Character, Comic } from '../interfaces'
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 // Creates an URL to image by concatenating
 // path and extension of thumbnail data
-export const getImgPath = (comic: Comic) => {
+export const getImgPath = (comic: Comic | Character) => {
   if (comic.thumbnail) {
     const { path, extension } = comic.thumbnail
 
@@ -24,4 +24,10 @@ export const getBasePrice = (comic: Comic) => {
       currency: 'USD'
     })}`
   }
+}
+
+// Checks whether the passed object is empty, meaning it has
+// no keys. Useful for Record types.
+export const isObjectEmpty = (obj: Object) => {
+  return Object.keys(obj).length == 0
 }

@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { Comic } from '../interfaces'
+import { getBasePrice, getImgPath } from '../utils/utils'
+
+// Props
+interface Props {
+  comic: Comic
+}
+
+// Defaults
+const props = withDefaults(defineProps<Props>(), {
+  comic: undefined
+})
+
+// Local state and computed values
+const imgPath = computed(() => getImgPath(props.comic))
+const basePrice = computed(() => getBasePrice(props.comic))
+
+const emit = defineEmits(['addToCart', 'addToWatchlist'])
+</script>
+
 <template>
   <article class="c-card shadow-md">
     <div class="c-card__header">
@@ -23,28 +45,6 @@
     </div>
   </article>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { Comic } from '../interfaces'
-import { getBasePrice, getImgPath } from '../utils/utils';
-
-// Props
-interface Props {
-  comic: Comic
-}
-
-// Defaults
-const props = withDefaults(defineProps<Props>(), {
-  comic: undefined
-})
-
-const imgPath = computed(() => getImgPath(props.comic))
-const basePrice = computed(() => getBasePrice(props.comic))
-
-const emit = defineEmits(['addToCart', 'addToWatchlist']);
-
-</script>
 
 <style lang="scss" scoped>
 .c-card {

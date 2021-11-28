@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../store/authStore'
+import { useCartStore } from '../store/cartStore'
+
+const router = useRouter()
+const authStore = useAuthStore()
+const cartStore = useCartStore()
+
+const logout = () => {
+  authStore.logoutUser()
+  router.push('/login')
+}
+</script>
+
 <template>
   <nav class="c-navbar px-48">
     <ul class="c-navbar__list">
@@ -24,22 +39,6 @@
     </ul>
   </nav>
 </template>
-
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '../store/authStore';
-import { useCartStore } from '../store/cartStore';
-
-const router = useRouter()
-const authStore = useAuthStore()
-const cartStore = useCartStore()
-
-const logout = () => {
-  authStore.logoutUser()
-  router.push('/login')
-}
-
-</script>
 
 <style lang="scss" scoped>
 @use '../styles/abstracts' as abs;

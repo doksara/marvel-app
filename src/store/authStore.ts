@@ -13,7 +13,7 @@ export type ActiveUser = Omit<User, 'password'>
 export type AuthState = {
   currentUser: ActiveUser | null
   users: Array<User>
-};
+}
 
 export const useAuthStore = defineStore('auth', {
   state: () => {

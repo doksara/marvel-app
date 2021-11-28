@@ -7,11 +7,11 @@
     :title="props.text"
   >
     <div class="c-btn__inner">
-      <slot></slot>
       <span v-if="props.text" class="c-btn__text">
         {{ text }}
       </span>
-      <svg v-if="props.isLoading" class="c-btn__icon">
+      <slot></slot>
+      <svg v-if="props.isLoading" class="c-btn__spinner">
         <use xlink:href="../assets/icons/symbol-defs.svg#icon-spinner" />
       </svg>
     </div>
@@ -58,7 +58,7 @@ const styleClasses = computed(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use '../styles/abstracts' as abs;
  
 .c-btn {
@@ -79,6 +79,7 @@ const styleClasses = computed(() => {
   color: abs.$warm-grey-050;
 
   &:disabled {
+    color: abs.$warm-grey-050 !important;
     border-color: abs.$warm-grey-300 !important;
     background: abs.$warm-grey-300 !important;
   }
@@ -89,9 +90,17 @@ const styleClasses = computed(() => {
     align-items: center;
     width: 100%;
     text-align: center;
+
+    // Icon in slot
+    & > svg {
+      width: .9em;
+      height: .9em;
+      fill: currentColor;
+      margin-left: .2em;
+    }
   }
 
-  &__icon {
+  &__spinner {
     width: 1rem;
     height: 1rem;
     fill: white;
@@ -109,11 +118,10 @@ const styleClasses = computed(() => {
  
     &:hover,
     &:focus,
-    &:active,
-    &:not(:disabled) {
-      color: abs.$warm-grey-050;
+    &:active {
+      color: abs.$red-900;
       border-color: abs.$red-500;
-      background-color: rgba(abs.$red-500, .85);
+      background-color: abs.$red-100;
     }
   }
  

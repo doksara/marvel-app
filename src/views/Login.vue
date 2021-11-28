@@ -33,7 +33,7 @@ const submit = async () => {
       type: 'success'
     })
 
-    router.push('/home')
+    router.push('/')
   } 
   
   else {

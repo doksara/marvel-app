@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import NotificationList from './components/NotificationList.vue';
-import { useGlobalStore } from './store/globalStore';
+import NotificationList from './components/NotificationList.vue'
+import { useGlobalStore } from './store/globalStore'
 
 const globalStore = useGlobalStore()
 </script>

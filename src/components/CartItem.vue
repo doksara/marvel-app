@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { Comic } from '../interfaces'
+import { getBasePrice, getImgPath } from '../utils/utils'
+
+// Props
+interface Props {
+  comic: Comic
+}
+
+// Defaults
+const props = withDefaults(defineProps<Props>(), {
+  comic: undefined
+})
+
+const imgPath = computed(() => getImgPath(props.comic))
+const basePrice = computed(() => getBasePrice(props.comic))
+
+const emit = defineEmits(['removeFromCart', 'addToWatchlist'])
+</script>
+
 <template>
   <li class="c-cart-item">
     <div class="c-cart-item__imagecontainer">
@@ -39,33 +60,6 @@
   </li>
 </template>
 
-<script setup lang="ts">
-import BaseButton from './BaseButton.vue';
-import { computed, onMounted } from 'vue';
-import { Comic } from '../interfaces';
-import { getBasePrice, getImgPath } from '../utils/utils';
-
-// Props
-interface Props {
-  comic: Comic
-}
-
-onMounted(() => {
-  console.log(props.comic)
-})
-
-// Defaults
-const props = withDefaults(defineProps<Props>(), {
-  comic: undefined
-})
-
-const imgPath = computed(() => getImgPath(props.comic))
-const basePrice = computed(() => getBasePrice(props.comic))
-
-const emit = defineEmits(['removeFromCart', 'addToWatchlist']);
-
-</script>
-
 <style lang="scss">
 @use '../styles/abstracts' as abs;
 
@@ -100,7 +94,7 @@ const emit = defineEmits(['removeFromCart', 'addToWatchlist']);
     font-weight: bold;
     max-width: 30ch;
     white-space: nowrap;
-        overflow: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
   }
 

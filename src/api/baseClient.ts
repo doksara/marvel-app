@@ -7,4 +7,4 @@ const HTTP = axios.create({
   }
 })
 
-export default HTTP;
+export default HTTP

@@ -1,7 +1,7 @@
 import { watch } from 'vue'
 import { PiniaPluginContext, _GettersTree } from 'pinia'
 
-type Store = PiniaPluginContext['store'];
+type Store = PiniaPluginContext['store']
 
 declare module 'pinia' {
   export interface DefineStoreOptions<Id extends string, S extends StateTree, G extends _GettersTree<S>, A> {

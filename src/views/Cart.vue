@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref } from 'vue'
 import { useCartStore } from '../store/cartStore'
-import { useRouter } from 'vue-router';
-import { useGlobalStore } from '../store/globalStore';
-import { Comic } from '../interfaces';
-import { delay } from '../utils/utils';
-import BaseButton from '../components/BaseButton.vue';
-import BaseNavbar from '../components/BaseNavbar.vue';
+import { useRouter } from 'vue-router'
+import { useGlobalStore } from '../store/globalStore'
+import { Comic } from '../interfaces'
+import { delay } from '../utils/utils'
+import BaseButton from '../components/BaseButton.vue'
+import BaseNavbar from '../components/BaseNavbar.vue'
 import CartItem from '../components/CartItem.vue'
-import Carousel from '../components/Carousel.vue';
+import Carousel from '../components/Carousel.vue'
 
 const cartStore = useCartStore()
 const globalStore = useGlobalStore()

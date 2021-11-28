@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { info } from 'console';
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { Validator } from '../composables/validation'
 
 // Types
@@ -30,10 +29,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const isValid = computed(() => {
   if (!props.validation) {
-    return true;
+    return true
   }
 
-  return !props.validation.errors;
+  return !props.validation.errors
 })
 
 const onInput = (event: any) => {
@@ -42,11 +41,11 @@ const onInput = (event: any) => {
 
 const onBlur = (event: any) => {
   if (!props.validation) {
-    return;
+    return
   }
 
   if (props.validation.touched) {
-    props.validation.validate();
+    props.validation.validate()
   }
 }
 
@@ -74,7 +73,7 @@ const emit = defineEmits(['update:modelValue'])
       </svg>
     </div>
     <p
-      class="text-sm text-red-600"
+      class="c-input__note"
       v-if="!isValid"
     >
       {{ props.validation && props.validation.errors && props.validation.errors[0] }}
@@ -82,7 +81,7 @@ const emit = defineEmits(['update:modelValue'])
   </div>
 </template>
 
-<style lang="scss"> 
+<style lang="scss" scoped> 
 @use '../styles/abstracts' as abs;
 
 .c-input {
@@ -125,15 +124,14 @@ const emit = defineEmits(['update:modelValue'])
     text-indent: abs.$text-indent-md;
 
     &:focus {      
-      outline: 2px solid abs.$yellow-vivid-400;
+      outline: 2px solid abs.$warm-grey-400;
     }
   }
 
   &__note {
     display: block;
-    text-align: right;
     color: abs.$red-500;
-    font-size: abs.$font-size-sm;
+    font-size: .8em;
     font-weight: 300;
     margin-top: abs.$spacing-xs;
   }

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useAuthStore } from '../store/authStore';
-import { useRouter } from 'vue-router';
-import { useGlobalStore } from '../store/globalStore';
-import { email, minLength, password, required, sameAs, useValidation } from '../composables/validation';
-import { delay } from '../utils/utils';
-import FormInput from '../components/FormInput.vue';
+import { useAuthStore } from '../store/authStore'
+import { useRouter } from 'vue-router'
+import { useGlobalStore } from '../store/globalStore'
+import { email, minLength, password, required, sameAs, useValidation } from '../composables/validation'
+import { delay } from '../utils/utils'
+import FormInput from '../components/FormInput.vue'
 import BaseButton from '../components/BaseButton.vue'
-import BaseLink from '../components/BaseLink.vue';
+import BaseLink from '../components/BaseLink.vue'
 
 const authStore = useAuthStore()
 const globalStore = useGlobalStore()
@@ -29,7 +29,7 @@ const form = useValidation({
     sameAs("password"),
   ],
   email: [required, email]
-});
+})
 
 const canSubmit = computed(() => form.$validation.valid)
 

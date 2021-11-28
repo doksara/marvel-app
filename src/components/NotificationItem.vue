@@ -1,3 +1,48 @@
+<script setup lang="ts">
+import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { useGlobalStore } from '../store/globalStore'
+
+// Types
+export interface NotificationItemProps {
+  id: string
+  message: string
+  type: 'success' | 'info' | 'error'
+}
+
+// Props
+const props = defineProps<NotificationItemProps>()
+
+// Lifecycle methods
+onMounted(() => {
+  timeout.value = setTimeout(() => {
+    dismissNotification(props.id)
+  }, 3000)
+})
+
+onUnmounted(() => {
+  clearTimeout(timeout.value)
+})
+
+// Composables and externals
+const globalStore = useGlobalStore()
+
+// Local state and computed 
+const timeout = ref()
+const notificationStyle = computed(() => {
+  return {
+    'c-notification-item--success': props.type === 'success',
+    'c-notification-item--info': props.type === 'info',
+    'c-notification-item--error': props.type === 'error',
+  }
+})
+
+// Methods
+const dismissNotification = (id: string) => {
+  globalStore.dismissNotification(id)
+}
+
+</script>
+
 <template>
   <div
     class="c-notification-item"
@@ -23,45 +68,6 @@
     </button>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted } from 'vue';
-import { useGlobalStore } from '../store/globalStore';
-
-const globalStore = useGlobalStore()
-const timeout = ref()
-
-export interface NotificationItemProps {
-  id: string
-  message: string
-  type: 'success' | 'info' | 'error'
-}
-
-const props = defineProps<NotificationItemProps>()
-
-
-onMounted(() => {
-  timeout.value = setTimeout(() => {
-    dismissNotification(props.id);
-  }, 3000);
-})
-
-onUnmounted(() => {
-  clearTimeout(timeout.value);
-})
-
-const dismissNotification = (id: string) => {
-  globalStore.dismissNotification(id)
-}
-
-const notificationStyle = computed(() => {
-  return {
-    'c-notification-item--success': props.type === 'success',
-    'c-notification-item--info': props.type === 'info',
-    'c-notification-item--error': props.type === 'error',
-  };
-})
-</script>
 
 <style lang="scss" scoped>
 @use '../styles/abstracts' as abs;
