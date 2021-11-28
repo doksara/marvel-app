@@ -1,3 +1,9 @@
+export interface ProgressBarStepProps {
+  index: number
+  currentStep: number
+  title: string
+}
+
 export interface NotificationItemProps {
   id: string
   message: string

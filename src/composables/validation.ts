@@ -13,7 +13,7 @@ export type Validator = {
   validate?: any
 }
 
-type FormState = {
+export type FormState = {
   [key: string]: string | any
   $validation: ValidationState
 }
@@ -108,6 +108,13 @@ export function email(v: string) {
   const email = /^[a-z\d!#$%&'*+\-/=?^_`{|}~]+@([\w-]+\.)+[\w-]{2,4}$/gi
   if (!email.test(v)) {
     return "This is not a valid email"
+  }
+}
+
+// Phone
+export function phone(v: string) {
+  if (!v.startsWith('+') || v.length > 10) {
+    return 'Phone must start with + and have maximum 10 digits'
   }
 }
 

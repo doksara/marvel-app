@@ -1,23 +1,3 @@
-<template>
-  <button
-    class="c-btn"
-    :class="styleClasses"
-    :type="props.type"
-    :disabled="props.disabled || props.isLoading"
-    :title="props.text"
-  >
-    <div class="c-btn__inner">
-      <span v-if="props.text" class="c-btn__text">
-        {{ text }}
-      </span>
-      <slot></slot>
-      <svg v-if="props.isLoading" class="c-btn__spinner">
-        <use xlink:href="../assets/icons/symbol-defs.svg#icon-spinner" />
-      </svg>
-    </div>
-  </button>
-</template>
- 
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -57,6 +37,26 @@ const styleClasses = computed(() => {
   };
 })
 </script>
+
+<template>
+  <button
+    class="c-btn"
+    :class="styleClasses"
+    :type="props.type"
+    :disabled="props.disabled || props.isLoading"
+    :title="props.text"
+  >
+    <div class="c-btn__inner">
+      <span v-if="props.text" class="c-btn__text">
+        {{ text }}
+      </span>
+      <slot></slot>
+      <svg v-if="props.isLoading" class="c-btn__spinner">
+        <use xlink:href="../assets/icons/symbol-defs.svg#icon-spinner" />
+      </svg>
+    </div>
+  </button>
+</template>
 
 <style lang="scss">
 @use '../styles/abstracts' as abs;
