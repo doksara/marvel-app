@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { email, phone, required, useValidation } from '../composables/validation'
+import { useCartStore } from '../store/cartStore'
+import { useOrderStore } from '../store/orderStore'
+import { useGlobalStore } from '../store/globalStore'
+import { useRouter } from 'vue-router'
+import { OrderStatus } from '../interfaces'
 import BaseButton from '../components/BaseButton.vue'
 import BaseNavbar from '../components/BaseNavbar.vue'
 import Carousel from '../components/Carousel.vue'
 import FormInput from '../components/FormInput.vue'
 import ProgressBar from '../components/ProgressBar.vue'
+
+// Composables and externals
+const cartStore = useCartStore()
+const orderStore = useOrderStore()
+const globalStore = useGlobalStore()
+const router = useRouter()
 
 // Local state and computed values
 const currentStep = ref(1)
@@ -52,7 +63,10 @@ const goToNextStep = () => {
       submit()
     }
   } else {
-
+    // Execute validation of each individual form field
+    Object.values(stepsMap[currentStep.value - 1].$validation)
+      .filter(prop => typeof(prop) !== "boolean")
+      .forEach(field => field.validate())
   }
 }
 
@@ -65,7 +79,35 @@ const goToPreviousStep = () => {
 }
 
 const submit = () => {
+  // Create a new order
+  orderStore.createOrder({
+    items: cartStore.items,
+    totalPrice: cartStore.grandtotal,
+    status: OrderStatus.PENDING,
+    contactInformation: {
+      firstName: contactInformationForm.firstName,
+      lastName: contactInformationForm.lastName,
+      email: contactInformationForm.email,
+      phoneNumber: contactInformationForm.phoneNumber
+    },
+    deliveryInformation: {
+      address: deliveryInformationForm.address,
+      zipCode: deliveryInformationForm.zipCode,
+      country: deliveryInformationForm.country,
+      city: deliveryInformationForm.city
+    }
+  })
+
+  // Empty the cart
+  cartStore.empty()
+
+  // Create a notification and redirect
+  globalStore.pushNotification({
+    message: 'Your order has been submitted. Redirecting..',
+    type: 'success'
+  })
   
+  router.push('/orders')
 }
 </script>
 
@@ -111,7 +153,6 @@ const submit = () => {
             <FormInput 
               id="phoneNumber"
               label="Contact number"
-              type="number"
               class="mb-4"
               placeholder="+123456780"
               v-model="contactInformationForm.phoneNumber"

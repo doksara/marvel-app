@@ -9,12 +9,13 @@ import FormInput from '../components/FormInput.vue'
 import BaseButton from '../components/BaseButton.vue'
 import BaseLink from '../components/BaseLink.vue'
 
+// Composables and externals
 const authStore = useAuthStore()
 const globalStore = useGlobalStore()
 const router = useRouter()
 
+// Local state and computed values
 const isLoading = ref(false)
-
 const form = useValidation({
   username: [required, minLength(2)],
   password: [
@@ -33,6 +34,7 @@ const form = useValidation({
 
 const canSubmit = computed(() => form.$validation.valid)
 
+// Methods
 const submit = async () => {
   if (canSubmit.value) {
     isLoading.value = true
@@ -55,7 +57,10 @@ const submit = async () => {
   
     router.push('/login')
   } else {
-    alert("ej")
+    // Execute validation of each individual form field
+    Object.values(form.$validation)
+      .filter(prop => typeof(prop) !== "boolean")
+      .forEach(field => field.validate())
   }
 }
 </script>
@@ -112,6 +117,7 @@ const submit = async () => {
 </template>
 
 <style lang="scss" scoped>
+
 @use '../styles/abstracts' as abs;
 .v-registration {
   display: grid;

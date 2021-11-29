@@ -31,3 +31,13 @@ export const getBasePrice = (comic: Comic) => {
 export const isObjectEmpty = (obj: Object) => {
   return Object.keys(obj).length == 0
 }
+
+// Generates a random ID
+export const generateId = () => {
+  return Math.floor(Math.random() * 1000)
+}
+
+// Creates a date in YYYY-MM-DD format 
+export const getCurrentDate = () => {
+  return new Date().toISOString().split('T')[0]
+}

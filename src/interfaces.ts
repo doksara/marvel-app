@@ -28,6 +28,35 @@ export interface ComicDataContainer {
   results?: Array<Comic>
 }
 
+export interface Order {
+  id: number
+  items: Array<Comic>
+  totalPrice: number
+  status: OrderStatus
+  createdAt: string
+  contactInformation: ContactInformation
+  deliveryInformation: DeliveryInformation
+}
+
+export interface ContactInformation {
+  firstName: string
+  lastName: string
+  phoneNumber: string
+  email: string
+}
+
+export interface DeliveryInformation {
+  address: string
+  zipCode: number
+  city: string
+  country: string
+}
+
+export enum OrderStatus {
+  PENDING = 'Pending',
+  DELIVERED = 'Delivered'
+}
+
 export interface Comic {
   id: number
   digitalId?: number

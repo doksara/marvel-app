@@ -117,7 +117,6 @@ const styleClasses = computed(() => {
     background: abs.$red-500;
  
     &:hover,
-    &:focus,
     &:active {
       color: abs.$red-900;
       border-color: abs.$red-500;
@@ -130,7 +129,6 @@ const styleClasses = computed(() => {
     background: abs.$warm-grey-500;
  
     &:hover,
-    &:focus,
     &:active {
       border-color: abs.$warm-grey-500;
       background: abs.$warm-grey-400;
@@ -145,7 +143,6 @@ const styleClasses = computed(() => {
     color: white;
     
     &:hover,
-    &:focus,
     &:active {
       border-color: hsl(123, 35%, 51%);
       background: hsl(122, 42%, 75%);

@@ -37,7 +37,6 @@ export const useComicsClient = () => {
       .get<CharacterDataWrapper>(`${URL}/${comicId}/characters`)
       .then((response) => {
         if (response.data.data?.results){
-          console.log(response.data.data.results)
           characters = response.data.data?.results
         }
       })

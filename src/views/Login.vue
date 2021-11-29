@@ -86,6 +86,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 @use '../styles/abstracts' as abs;
+
 .v-login {
   display: grid;
   grid-template-columns: 6fr 4.5fr;
