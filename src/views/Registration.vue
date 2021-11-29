@@ -148,7 +148,7 @@ const submit = async () => {
   }
 
   &__background {
-    background: url('../assets/backgrounds/3-vertical-original.jpg');
+    background: url('../assets/backgrounds/2-vertical-original.jpg');
     background-repeat: no-repeat;
     background-size: cover;
   }

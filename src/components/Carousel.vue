@@ -1,6 +1,6 @@
 <template>
   <div class="c-carousel">
-    <img src="../assets/backgrounds/9-horizontal-original.jpg" alt="Sample">
+    <img src="../assets/backgrounds/4-horizontal-original.jpg" alt="Sample">
   </div>
 </template>
 
